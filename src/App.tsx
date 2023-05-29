@@ -1,24 +1,56 @@
-import { Button } from 'antd';
+import { useDebounceFn } from 'ahooks';
+import { Input, Select } from 'antd';
+import { Fzf } from 'fzf';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 export default function App() {
-    const onclick = async () => {
-        // utools.showOpenDialog({
-        //     filters: [{ name: 'plugin.json', extensions: ['json'] }],
-        //     properties: ['openFile'],
-        // });
-        // // utools.findInPage('utools');
-        // utools.showNotification('Hi, uTools');
-        // utools.shellOpenPath(
-        //     '/Users/zsy/Documents/zsy/test/utools-plugin/dist',
-        // );
-        // utools.shellBeep();
-        const result = await (window as any).test();
-        console.log(`test:>fs`, result);
-    };
+    const fzfRef = useRef<Fzf<string[]>>();
+    const [findList, setFindList] = useState<string[]>([]);
+
+    useLayoutEffect(() => {
+        const fn = async () => {
+            const result: string = await (window as any).findDirectory();
+            const list = result.split('\n');
+            const fzf = new Fzf(list, { selector: (item) => item });
+            fzfRef.current = fzf;
+        };
+        fn();
+    }, []);
+
+    const { run } = useDebounceFn(
+        (findStr: string) => {
+            if (!fzfRef.current) {
+                return;
+            }
+            const entries = fzfRef.current?.find(findStr);
+            const ranking = entries.map((entry) => entry.item);
+            setFindList(ranking);
+        },
+        { wait: 300 },
+    );
+
+    useEffect(() => {
+        run('');
+    }, [run]);
+
+    const options = useMemo(() => {
+        return findList.map((item) => {
+            return {
+                label: item,
+                value: item,
+            };
+        });
+    }, [findList]);
 
     return (
-        <div>
-            <Button onClick={onclick}>click</Button>
+        <div style={{ margin: 50 }}>
+            <Select
+                showSearch
+                style={{ width: 700 }}
+                options={options}
+                onSearch={run}
+                filterOption={false}
+            />
         </div>
     );
 }
