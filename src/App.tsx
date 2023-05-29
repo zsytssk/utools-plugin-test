@@ -1,40 +1,15 @@
-import { useDebounceFn } from 'ahooks';
-import { Input, Select } from 'antd';
-import { Fzf } from 'fzf';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Card, ConfigProvider, Select, theme } from 'antd';
+import { useCallback, useMemo } from 'react';
+
+import styles from './index.module.less';
+import { useGetList } from './server';
 
 export default function App() {
-    const fzfRef = useRef<Fzf<string[]>>();
-    const [findList, setFindList] = useState<string[]>([]);
-
-    useLayoutEffect(() => {
-        const fn = async () => {
-            const result: string = await (window as any).findDirectory();
-            const list = result.split('\n');
-            const fzf = new Fzf(list, { selector: (item) => item });
-            fzfRef.current = fzf;
-        };
-        fn();
-    }, []);
-
-    const { run } = useDebounceFn(
-        (findStr: string) => {
-            if (!fzfRef.current) {
-                return;
-            }
-            const entries = fzfRef.current?.find(findStr);
-            const ranking = entries.map((entry) => entry.item);
-            setFindList(ranking);
-        },
-        { wait: 300 },
-    );
-
-    useEffect(() => {
-        run('');
-    }, [run]);
+    const { darkAlgorithm } = theme;
+    const { run, data: findList, loading } = useGetList();
 
     const options = useMemo(() => {
-        return findList.map((item) => {
+        return findList?.map((item) => {
             return {
                 label: item,
                 value: item,
@@ -42,15 +17,47 @@ export default function App() {
         });
     }, [findList]);
 
+    const onChange = useCallback((dir: string) => {
+        (window as any).runSelected(dir);
+        utools.hideMainWindow();
+    }, []);
+
     return (
-        <div style={{ margin: 50 }}>
-            <Select
-                showSearch
-                style={{ width: 700 }}
-                options={options}
-                onSearch={run}
-                filterOption={false}
-            />
-        </div>
+        <ConfigProvider
+            theme={{
+                algorithm: darkAlgorithm,
+            }}
+        >
+            <Card className={styles.app}>
+                <div className="con">
+                    <div className="select-box">
+                        <Select
+                            value=""
+                            size="large"
+                            loading={loading}
+                            autoFocus
+                            allowClear
+                            placeholder={'请输入文件夹名称搜索'}
+                            showSearch
+                            options={options}
+                            onSearch={run}
+                            onChange={(e) => {
+                                onChange(e);
+                            }}
+                            filterOption={false}
+                        />
+                    </div>
+                    {/* <div>
+                配置
+                <Space>
+                    find命令 <Input />
+                </Space>
+                <Space>
+                    运行命令 <Input />
+                </Space>
+            </div> */}
+                </div>
+            </Card>
+        </ConfigProvider>
     );
 }

@@ -12,3 +12,7 @@ import { excuse } from './utils/excuse';
     );
     return result;
 };
+
+(window as any).runSelected = async (dir: string) => {
+    return await excuse(`/usr/local/bin/code ${dir}`, { output: true });
+};

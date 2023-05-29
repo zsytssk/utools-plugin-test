@@ -10,11 +10,6 @@ export default defineConfig({
         exclude: externals as any[],
     },
     plugins: [
-        {
-            ...eslint(),
-            enforce: 'pre',
-            apply: 'build',
-        },
         react(),
         commonjsExternals({
             externals,
