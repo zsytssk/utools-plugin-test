@@ -3,8 +3,10 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "build": "tsc && vite build",
-        "buildWatch": "tsc && vite --watch build",
+        "build": "vite build -c vite.main.config.ts && vite build -c vite.preload.config.ts",
+        "buildWatch": " npm-run-all --parallel build-main build-preload",
+        "build-main": "vite build --watch -c vite.main.config.ts",
+        "build-preload": "vite build --watch -c vite.preload.config.ts",
         "dev": "vite",
         "preview": "vite preview"
     },
@@ -17,6 +19,7 @@
         "less": "^4.1.2",
         "lodash": "^4.17.21",
         "node-pty": "^0.10.1",
+        "npm-run-all": "^4.1.5",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-transition-group": "^4.4.2",
