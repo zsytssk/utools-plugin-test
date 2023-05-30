@@ -10,9 +10,9 @@ import { excuse } from './utils/excuse';
             path: dir,
         },
     );
-    return result;
+    return result || [];
 };
 
 (window as any).runSelected = async (dir: string) => {
-    return await excuse(`/usr/local/bin/code ${dir}`, { output: true });
+    return await excuse(`/opt/homebrew/bin/nvim ${dir}`, { output: true });
 };

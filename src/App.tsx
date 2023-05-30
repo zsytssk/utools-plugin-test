@@ -1,62 +1,43 @@
-import { Card, ConfigProvider, Select, theme } from 'antd';
-import { useCallback, useMemo } from 'react';
+import { SettingOutlined } from '@ant-design/icons';
+import { Button, Card, ConfigProvider, Space, Switch, theme } from 'antd';
+import { useState } from 'react';
 
 import styles from './index.module.less';
-import { useGetList } from './server';
+import { Search } from './search';
+import { Setting } from './setting';
 
 export default function App() {
-    const { darkAlgorithm } = theme;
-    const { run, data: findList, loading } = useGetList();
-
-    const options = useMemo(() => {
-        return findList?.map((item) => {
-            return {
-                label: item,
-                value: item,
-            };
-        });
-    }, [findList]);
-
-    const onChange = useCallback((dir: string) => {
-        (window as any).runSelected(dir);
-        utools.hideMainWindow();
-    }, []);
+    const { darkAlgorithm, defaultAlgorithm } = theme;
+    const [darkMode, setDarkMode] = useState(true);
+    const [isSetting, setIsSetting] = useState(true);
 
     return (
         <ConfigProvider
             theme={{
-                algorithm: darkAlgorithm,
+                algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
             }}
         >
             <Card className={styles.app}>
-                <div className="con">
-                    <div className="select-box">
-                        <Select
-                            value=""
-                            size="large"
-                            loading={loading}
-                            autoFocus
-                            allowClear
-                            placeholder={'请输入文件夹名称搜索'}
-                            showSearch
-                            options={options}
-                            onSearch={run}
+                <Space className="config-box">
+                    <Space>
+                        <Switch
                             onChange={(e) => {
-                                onChange(e);
+                                setDarkMode(!e);
                             }}
-                            filterOption={false}
                         />
-                    </div>
-                    {/* <div>
-                配置
-                <Space>
-                    find命令 <Input />
+                        主题
+                    </Space>
+
+                    <Button
+                        className="btn-config"
+                        type={isSetting ? 'primary' : 'default'}
+                        onClick={() => setIsSetting(!isSetting)}
+                    >
+                        <SettingOutlined />
+                    </Button>
                 </Space>
-                <Space>
-                    运行命令 <Input />
-                </Space>
-            </div> */}
-                </div>
+
+                {isSetting ? <Setting /> : <Search />}
             </Card>
         </ConfigProvider>
     );

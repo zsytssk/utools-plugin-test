@@ -4,9 +4,9 @@
     "logo": "logo.png",
     "features": [
         {
-            "code": "hello",
-            "explain": "hello world",
-            "cmds": ["hello", "你好"]
+            "code": "fzRun",
+            "explain": "用fzf寻找文件夹，然后选中应用打开",
+            "cmds": ["fzRun"]
         }
     ]
 }
