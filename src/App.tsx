@@ -8,7 +8,7 @@ import { Setting } from './setting';
 
 export default function App() {
     const { darkAlgorithm, defaultAlgorithm } = theme;
-    const [darkMode, setDarkMode] = useState(true);
+    const [darkMode, setDarkMode] = useState(false);
     const [isSetting, setIsSetting] = useState(true);
 
     return (
