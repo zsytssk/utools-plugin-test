@@ -7,9 +7,9 @@
         "buildWatch": "npm-run-all --parallel build-main build-preload",
         "build-main": "vite build --watch -c vite.main.config.ts",
         "build-preload": "vite build --watch -c vite.preload.config.ts",
-        "dev-main": "vite dev -c vite.main.config.ts",
-        "dev-preload": "vite dev -c vite.preload.config.ts",
-        "dev": "npm-run-all --parallel dev-main dev-preload",
+        "dev-main": "vite -c vite.main.config.ts",
+        "dev-preload": "vite -c vite.preload.config.ts",
+        "dev": "npm-run-all --parallel dev-main",
         "preview": "vite preview"
     },
     "dependencies": {

@@ -25,7 +25,7 @@ export default function App() {
                                 setDarkMode(!e);
                             }}
                         />
-                        主题1
+                        主题
                     </Space>
 
                     <Button
