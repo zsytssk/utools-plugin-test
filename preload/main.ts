@@ -14,6 +14,5 @@ import { excuse } from './utils/excuse';
 };
 
 (window as any).runSelected = async (dir: string) => {
-    // return await excuse(`open -a AlacrittyLauncher ${dir}`, { output: true });
-    return await excuse(`open -a test ${dir}`, { output: true });
+    return await excuse(`open -a AlacrittyLauncher ${dir}`, { output: true });
 };

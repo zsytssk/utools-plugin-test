@@ -13,6 +13,7 @@ export default defineConfig({
         }),
     ],
     build: {
+        emptyOutDir: false,
         outDir: './dist',
         rollupOptions: {
             input: './preload/main.ts',
@@ -23,6 +24,5 @@ export default defineConfig({
             },
         },
     },
-
     base: './',
 });
