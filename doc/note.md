@@ -4,8 +4,9 @@
 
 -   vite 如何配置多个项目
 
--   laravel vite
+-   preload 和 main 如何共享代码
 
 ## end
 
+-   laravel vite
 <!-- -   mac `open -a ... ` -->
