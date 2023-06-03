@@ -1,10 +1,19 @@
 export const APP_NAME = 'fzRun';
 
-function save(data: any) {
+type Data = {
+    runScript: string;
+    folder: Array<{
+        folder: string;
+        depth: number;
+    }>;
+    ignore: string;
+    otherFile: string;
+};
+function save(data: Data) {
     return utools.dbStorage.setItem(APP_NAME, JSON.stringify(data));
 }
 
-function get() {
+function get(): Data | undefined {
     try {
         const content = utools.dbStorage.getItem(APP_NAME);
         return JSON.parse(content);

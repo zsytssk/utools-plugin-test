@@ -6,8 +6,8 @@
     }
 }
 
-.app {
-    :global {
+:global {
+    :local(.app) {
         // background-color: transparent;
         display: flex;
         border-radius: 0;
@@ -18,11 +18,22 @@
             .btn-config {
                 margin-left: 10px;
             }
+            position: sticky;
+            top: 0;
+            padding: 10px 5px;
+            z-index: 1;
+            background-color: #fff;
         }
-        .ant-card-body {
+        & > .ant-card-body {
             padding: 50px;
             width: 100%;
             min-height: 100vh;
+        }
+
+        &.theme-dark {
+            .config-box {
+                background-color: #141414;
+            }
         }
     }
 }

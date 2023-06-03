@@ -1,12 +1,28 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input } from 'antd';
-import { useCallback, useEffect } from 'react';
+import { storage } from '@common/storage';
+import { Button, Form, Input } from 'antd';
+import { useCallback, useEffect, useImperativeHandle } from 'react';
 
-import { storage } from '../tools/storage';
 import styles from './index.module.less';
 
-export function Setting() {
+export type SettingOpt = { save: () => void };
+type Props = {
+    settingRef: React.MutableRefObject<SettingOpt | undefined>;
+};
+export function Setting({ settingRef }: Props) {
     const [form] = Form.useForm();
+
+    useImperativeHandle(
+        settingRef,
+        () => {
+            return {
+                save: () => {
+                    form.submit();
+                },
+            };
+        },
+        [form],
+    );
 
     useEffect(() => {
         const values = storage.get();
@@ -35,7 +51,6 @@ export function Setting() {
                                     fzf设置
                                     <div className="in-right">
                                         <Button
-                                            type="link"
                                             onClick={() => add({})}
                                             className="btn-add"
                                         >
@@ -91,16 +106,12 @@ export function Setting() {
                 </div>
                 <div className="sub-title">其他文件</div>
                 <div className="sub-con">
-                    <Form.Item name="other-file">
+                    <Form.Item name="otherFile">
                         <Input.TextArea
                             placeholder="用逗号分隔，放在搜索中的独立文件或文件夹"
                             className="other-input"
                         />
                     </Form.Item>
-                </div>
-
-                <div className="bottom">
-                    <Button onClick={() => form.submit()}>保存</Button>
                 </div>
             </Form>
         </div>

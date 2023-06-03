@@ -1,4 +1,5 @@
 import { useRequest } from 'ahooks';
+import { message } from 'antd';
 import { Fzf } from 'fzf';
 import { useLayoutEffect, useRef, useState } from 'react';
 
@@ -8,18 +9,21 @@ export function useGetList() {
 
     useLayoutEffect(() => {
         const fn = async () => {
-            const result: string = await (window as any).findDirectory();
-            const list = result.split('\n');
-            const fzf = new Fzf(list, { selector: (item) => item });
-            fzfRef.current = fzf;
-            setLoading(false);
+            try {
+                const list: string[] = await (window as any).findDirectory();
+                const fzf = new Fzf(list, { selector: (item) => item });
+                fzfRef.current = fzf;
+                setLoading(false);
+            } catch (err: any) {
+                message.error((err as Error).message);
+            }
         };
         fn();
     }, []);
 
     const res = useRequest(
         (filterStr: string) => {
-            return new Promise<string[]>((resolve, reject) => {
+            return new Promise<string[]>((resolve) => {
                 if (!fzfRef.current) {
                     return resolve([]);
                 }
@@ -28,7 +32,7 @@ export function useGetList() {
                 return resolve(ranking);
             });
         },
-        { debounceWait: 300 },
+        { debounceWait: 300, manual: true },
     );
 
     return { ...res, loading };

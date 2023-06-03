@@ -13,7 +13,7 @@ export function excuse(command: string, opts: Opts) {
         config.cwd = path;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
         let std_out = '';
         let std_err = '';
         const run_process = exec(command, config);

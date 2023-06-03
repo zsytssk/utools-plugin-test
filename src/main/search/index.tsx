@@ -21,6 +21,13 @@ export function Search() {
         utools.hideMainWindow();
     }, []);
 
+    const onSearch = useCallback(
+        (text = '') => {
+            run(text);
+        },
+        [run],
+    );
+
     return (
         <div className={styles.search}>
             <Select
@@ -32,10 +39,8 @@ export function Search() {
                 placeholder={'请输入文件夹名称搜索'}
                 showSearch
                 options={options}
-                onSearch={run}
-                onChange={(e) => {
-                    onChange(e);
-                }}
+                onSearch={onSearch}
+                onChange={onChange}
                 filterOption={false}
             />
         </div>

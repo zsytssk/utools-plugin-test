@@ -1,24 +1,40 @@
-import { SettingOutlined } from '@ant-design/icons';
+import { SaveOutlined, SettingOutlined } from '@ant-design/icons';
 import { Button, Card, ConfigProvider, Space, Switch, theme } from 'antd';
-import { useState } from 'react';
+import classNames from 'classnames';
+import { useRef, useState } from 'react';
 
 import styles from './index.module.less';
 import { Search } from './search';
-import { Setting } from './setting';
+import { Setting, SettingOpt } from './setting';
 
+const { darkAlgorithm, defaultAlgorithm } = theme;
 export default function App() {
-    const { darkAlgorithm, defaultAlgorithm } = theme;
-    const [darkMode, setDarkMode] = useState(false);
-    const [isSetting, setIsSetting] = useState(true);
-
+    const [darkMode, setDarkMode] = useState(true);
+    const [isSetting, setIsSetting] = useState(false);
+    const settingRef = useRef<SettingOpt>();
     return (
         <ConfigProvider
             theme={{
                 algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
             }}
         >
-            <Card className={styles.app}>
+            <Card
+                className={classNames({
+                    [styles.app]: true,
+                    'theme-dark': darkMode,
+                    'theme-light': !darkMode,
+                })}
+            >
                 <Space className="config-box">
+                    {isSetting ? (
+                        <Button
+                            className="btn-config"
+                            onClick={() => settingRef.current?.save()}
+                        >
+                            <SaveOutlined />
+                        </Button>
+                    ) : null}
+
                     <Space>
                         <Switch
                             onChange={(e) => {
@@ -37,7 +53,7 @@ export default function App() {
                     </Button>
                 </Space>
 
-                {isSetting ? <Setting /> : <Search />}
+                {isSetting ? <Setting settingRef={settingRef} /> : <Search />}
             </Card>
         </ConfigProvider>
     );

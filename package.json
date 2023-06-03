@@ -3,14 +3,13 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "build": "vite build -c vite.main.config.ts && vite build -c vite.preload.config.ts",
-        "buildWatch": "npm-run-all --parallel build-main build-preload",
-        "build-main": "vite build --watch -c vite.main.config.ts",
-        "build-preload": "vite build --watch -c vite.preload.config.ts",
-        "dev-main": "vite -c vite.main.config.ts",
-        "dev-preload": "vite -c vite.preload.config.ts",
-        "dev": "npm-run-all --parallel dev-main",
-        "preview": "vite preview"
+        "build": "vite build -c script/vite.main.config.ts && vite build -c script/vite.preload.config.ts",
+        "build-watch": "npm-run-all --parallel build-preload build-main",
+        "build-main": "vite build --watch -c script/vite.main.config.ts",
+        "build-preload": "vite build --watch -c script/vite.preload.config.ts",
+        "dev-main": "vite -c script/vite.main.config.ts",
+        "dev-preload": "vite -c script/vite.preload.config.ts",
+        "dev": "npm-run-all --parallel dev-main"
     },
     "dependencies": {
         "@ant-design/icons": "^5.1.3",

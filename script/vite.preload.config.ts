@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import commonjsExternals from 'vite-plugin-commonjs-externals';
 
+import { PathConfig, resolve } from './common.config';
+
 const externals = ['child_process', 'path', /^electron(\/.+)?$/];
 
 export default defineConfig({
@@ -12,11 +14,12 @@ export default defineConfig({
             externals,
         }),
     ],
+    resolve: resolve,
     build: {
         emptyOutDir: false,
-        outDir: './dist',
+        outDir: PathConfig.Dist,
         rollupOptions: {
-            input: './preload/main.ts',
+            input: PathConfig.PreloadInput,
             output: {
                 strict: false,
                 entryFileNames: 'preload.js',
