@@ -9,7 +9,11 @@ interface UBrowser {
    * @param headers 请求头参数
    * @param timeout 加载超时,默认 60000 ms(60秒)
    */
-  goto(url: string, headers?: { Referer: string, userAgent: string }, timeout?: number): this;
+  goto(
+    url: string,
+    headers?: { Referer: string; userAgent: string },
+    timeout?: number,
+  ): this;
   /**
    * 页面大小
    */
@@ -29,7 +33,18 @@ interface UBrowser {
   /**
    * 键盘按键
    */
-  press(key: string, ...modifier: ('control' | 'ctrl' | 'shift' | 'meta' | 'alt' | 'command' | 'cmd')[]): this;
+  press(
+    key: string,
+    ...modifier: (
+      | 'control'
+      | 'ctrl'
+      | 'shift'
+      | 'meta'
+      | 'alt'
+      | 'command'
+      | 'cmd'
+    )[]
+  ): this;
   /**
    * 粘贴
    * @param text 如果是图片的base64编码字符串，粘贴图片，为空只执行粘贴动作
@@ -40,17 +55,43 @@ interface UBrowser {
    * @param arg 1.字符串 - 要截取的DOM元素， 2.对象 - 截图位置和大小， 3.空 - 为截取整个窗口
    * @param savePath 截图保存路径，可以是文件夹 或 .png文件完全路径, 默认保存临时目录
    */
-  screenshot(arg: string | { x: number, y: number, width: number, height: number }, savePath?: string): this;
+  screenshot(
+    arg: string | { x: number; y: number; width: number; height: number },
+    savePath?: string,
+  ): this;
   /**
    * 保存为PDF
    * @param options 选项
    * @param savePath PDF保存路径，可以是文件夹 或 .pdf文件完全路径, 默认保存临时目录
    */
-  pdf(options?: { marginsType: 0 | 1 | 2, pageSize: ('A3' | 'A4' | 'A5' | 'Legal' | 'Letter' | 'Tabloid') | ({ width: number, height: number }) }, savePath?: string): this;
+  pdf(
+    options?: {
+      marginsType: 0 | 1 | 2;
+      pageSize:
+        | ('A3' | 'A4' | 'A5' | 'Legal' | 'Letter' | 'Tabloid')
+        | { width: number; height: number };
+    },
+    savePath?: string,
+  ): this;
   /**
    * 模拟设备
    */
-  device(arg: ('iPhone 11' | 'iPhone X' | 'iPad' | 'iPhone 6/7/8 Plus' | 'iPhone 6/7/8' | 'iPhone 5/SE' | 'HUAWEI Mate10' | 'HUAWEI Mate20' | 'HUAWEI Mate30' | 'HUAWEI Mate30 Pro') | { size: { width: number, height: number }, useragent: string }): this;
+  device(
+    arg:
+      | (
+          | 'iPhone 11'
+          | 'iPhone X'
+          | 'iPad'
+          | 'iPhone 6/7/8 Plus'
+          | 'iPhone 6/7/8'
+          | 'iPhone 5/SE'
+          | 'HUAWEI Mate10'
+          | 'HUAWEI Mate20'
+          | 'HUAWEI Mate30'
+          | 'HUAWEI Mate30 Pro'
+        )
+      | { size: { width: number; height: number }; useragent: string },
+  ): this;
   /**
    * 获取 cookie
    * @param name 为空获取全部cookie
@@ -63,7 +104,7 @@ interface UBrowser {
   /**
    * 设置Cookie
    */
-  setCookies(cookies: { name: string, value: string }[]): this;
+  setCookies(cookies: { name: string; value: string }[]): this;
   /**
    * 删除 cookie
    */
@@ -100,7 +141,11 @@ interface UBrowser {
    * @param timeout 超时 默认60000 ms(60秒)
    * @param params 传到 func 中的参数
    */
-  wait(func: (...params: any[]) => boolean, timeout?: number, ...params: any[]): this;
+  wait(
+    func: (...params: any[]) => boolean,
+    timeout?: number,
+    ...params: any[]
+  ): this;
   /**
    * 当元素存在时执行直到碰到 end
    * @param selector DOM元素
@@ -169,31 +214,31 @@ interface UBrowser {
    * @param options
    */
   run(options: {
-    show?: boolean,
-    width?: number,
-    height?: number,
-    x?: number,
-    y?: number,
-    center?: boolean,
-    minWidth?: number,
-    minHeight?: number,
-    maxWidth?: number,
-    maxHeight?: number,
-    resizable?: boolean,
-    movable?: boolean,
-    minimizable?: boolean,
-    maximizable?: boolean,
-    alwaysOnTop?: boolean,
-    fullscreen?: boolean,
-    fullscreenable?: boolean,
-    enableLargerThanScreen?: boolean,
-    opacity?: number
+    show?: boolean;
+    width?: number;
+    height?: number;
+    x?: number;
+    y?: number;
+    center?: boolean;
+    minWidth?: number;
+    minHeight?: number;
+    maxWidth?: number;
+    maxHeight?: number;
+    resizable?: boolean;
+    movable?: boolean;
+    minimizable?: boolean;
+    maximizable?: boolean;
+    alwaysOnTop?: boolean;
+    fullscreen?: boolean;
+    fullscreenable?: boolean;
+    enableLargerThanScreen?: boolean;
+    opacity?: number;
   }): Promise<any[]>;
 }
 
 interface Display {
-  accelerometerSupport: ('available' | 'unavailable' | 'unknown');
-  bounds: { x: number, y: number, width: number, height: number };
+  accelerometerSupport: 'available' | 'unavailable' | 'unknown';
+  bounds: { x: number; y: number; width: number; height: number };
   colorDepth: number;
   colorSpace: string;
   depthPerComponent: number;
@@ -202,32 +247,34 @@ interface Display {
   monochrome: boolean;
   rotation: number;
   scaleFactor: number;
-  size: { width: number, height: number };
-  touchSupport: ('available' | 'unavailable' | 'unknown');
-  workArea: { x: number, y: number, width: number, height: number };
-  workAreaSize: { width: number, height: number };
+  size: { width: number; height: number };
+  touchSupport: 'available' | 'unavailable' | 'unknown';
+  workArea: { x: number; y: number; width: number; height: number };
+  workAreaSize: { width: number; height: number };
 }
 
 interface DbDoc {
-  _id: string,
-  _rev?: string,
-  [key: string]: any
+  _id: string;
+  _rev?: string;
+  [key: string]: any;
 }
 
 interface DbReturn {
-  id: string,
-  rev?: string,
-  ok?: boolean,
-  error?: boolean,
-  name?: string,
-  message?: string
+  id: string;
+  rev?: string;
+  ok?: boolean;
+  error?: boolean;
+  name?: string;
+  message?: string;
 }
 
 interface UToolsApi {
   /**
    * 插件应用进入时触发
    */
-  onPluginEnter(callback: (action: {code: string, type: string, payload: any }) => void): void;
+  onPluginEnter(
+    callback: (action: { code: string; type: string; payload: any }) => void,
+  ): void;
   /**
    * 插件应用隐藏后台或完全退出时触发
    */
@@ -239,7 +286,7 @@ interface UToolsApi {
   /**
    * 插件应用从云端拉取到数据时触发
    */
-  onDbPull(callback: (docs: { _id: string, _rev: string }[]) => void): void;
+  onDbPull(callback: (docs: { _id: string; _rev: string }[]) => void): void;
   /**
    * 隐藏主窗口
    * @param isRestorePreWindow 是否焦点回归到前面的活动窗口，默认 true
@@ -259,7 +306,11 @@ interface UToolsApi {
    * @param placeholder 占位符， 默认为空
    * @param isFocus 是否获得焦点，默认为 true
    */
-  setSubInput(onChange: (text: string) => void, placeholder?: string, isFocus?: boolean): boolean;
+  setSubInput(
+    onChange: (text: string) => void,
+    placeholder?: string,
+    isFocus?: boolean,
+  ): boolean;
   /**
    * 移除子输入框
    */
@@ -286,7 +337,15 @@ interface UToolsApi {
    * @param options 参考 https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions
    * @param callback url 加载完成时的回调
    */
-  createBrowserWindow(url: string, options: { width?: number, height?: number }, callback?: () => void): { id: number, [key: string]: any, webContents: { id: number, [key: string]: any } };
+  createBrowserWindow(
+    url: string,
+    options: { width?: number; height?: number },
+    callback?: () => void,
+  ): {
+    id: number;
+    [key: string]: any;
+    webContents: { id: number; [key: string]: any };
+  };
   /**
    * 隐藏插件应用到后台
    */
@@ -298,45 +357,66 @@ interface UToolsApi {
   /**
    * 获取用户
    */
-  getUser(): { avatar: string, nickname: string, type: string } | null;
+  getUser(): { avatar: string; nickname: string; type: string } | null;
   /**
    * 获取用户服务端临时令牌
    */
-  fetchUserServerTemporaryToken(): Promise<{ token: string, expiredAt: number }>;
+  fetchUserServerTemporaryToken(): Promise<{
+    token: string;
+    expiredAt: number;
+  }>;
   /**
    * 打开支付
    * @param callback 支付成功触发
    */
-  openPayment(options: {
-    /**
-     * 商品ID，在 “uTools 开发者工具” 插件应用中创建
-     */
-    goodsId: string,
-    /**
-     * 第三方服务生成的订单号(可选)
-     */
-    outOrderId?: string,
-    /**
-     * 第三方服务附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用(可选)
-     */
-    attach?: string
-  }, callback?: () => void): void;
+  openPayment(
+    options: {
+      /**
+       * 商品ID，在 “uTools 开发者工具” 插件应用中创建
+       */
+      goodsId: string;
+      /**
+       * 第三方服务生成的订单号(可选)
+       */
+      outOrderId?: string;
+      /**
+       * 第三方服务附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用(可选)
+       */
+      attach?: string;
+    },
+    callback?: () => void,
+  ): void;
   /**
    * 获取用户支付记录
    */
-  fetchUserPayments(): Promise<{ order_id: string, total_fee: number, body: string, attach: string, goods_id: string, out_order_id: string, paid_at: string }[]>;
+  fetchUserPayments(): Promise<
+    {
+      order_id: string;
+      total_fee: number;
+      body: string;
+      attach: string;
+      goods_id: string;
+      out_order_id: string;
+      paid_at: string;
+    }[]
+  >;
   /**
    * 设置插件应用动态功能
    */
   setFeature(feature: {
-    code: string,
-    explain: string,
-    platform: ('darwin' | 'win32' | 'linux') | (Array<'darwin' | 'win32' | 'linux'>),
-    icon?: string,
-    cmds: (string | {
-      type: 'img' | 'files' | 'regex' | 'over' | 'window',
-      label: string
-    })[]
+    code: string;
+    explain: string;
+    platform:
+      | ('darwin' | 'win32' | 'linux')
+      | Array<'darwin' | 'win32' | 'linux'>;
+    icon?: string;
+    cmds: (
+      | string
+      | {
+          type: 'img' | 'files' | 'regex' | 'over' | 'window';
+          label: string;
+        }
+    )[];
   }): boolean;
   /**
    * 移除插件应用动态功能
@@ -346,27 +426,38 @@ interface UToolsApi {
    * 获取插件应用动态功能，参数为空获取所有动态功能
    */
   getFeatures(codes?: string[]): {
-    code: string,
-    explain: string,
-    platform: ('darwin' | 'win32' | 'linux') | (Array<'darwin' | 'win32' | 'linux'>),
-    icon?: string,
-    cmds: string | {
-      type: 'img' | 'files' | 'regex' | 'over' | 'window',
-      label: string
-    }[]
+    code: string;
+    explain: string;
+    platform:
+      | ('darwin' | 'win32' | 'linux')
+      | Array<'darwin' | 'win32' | 'linux'>;
+    icon?: string;
+    cmds:
+      | string
+      | {
+          type: 'img' | 'files' | 'regex' | 'over' | 'window';
+          label: string;
+        }[];
   }[];
   /**
    * 插件应用间跳转
    */
-  redirect(label: string, payload: string | { type: 'text' | 'img' | 'files', data: any }): void;
+  redirect(
+    label: string,
+    payload: string | { type: 'text' | 'img' | 'files'; data: any },
+  ): void;
   /**
    * 获取闲置的 ubrowser
    */
-  getIdleUBrowsers(): { id: number, title: string, url: string}[];
+  getIdleUBrowsers(): { id: number; title: string; url: string }[];
   /**
    * 设置 ubrowser 代理 https://www.electronjs.org/docs/api/session#sessetproxyconfig
    */
-  setUBrowserProxy(config: {pacScript?: string, proxyRules?: string, proxyBypassRules?: string}): boolean;
+  setUBrowserProxy(config: {
+    pacScript?: string;
+    proxyRules?: string;
+    proxyBypassRules?: string;
+  }): boolean;
   /**
    * 清空 ubrowser 缓存
    */
@@ -379,42 +470,63 @@ interface UToolsApi {
    * 弹出文件选择框
    */
   showOpenDialog(options: {
-    title?: string,
-    defaultPath?: string,
-    buttonLabel?: string,
-    filters?: { name: string, extensions: string[] }[],
-    properties?: Array<'openFile' | 'openDirectory' | 'multiSelections' | 'showHiddenFiles' | 'createDirectory' | 'promptToCreate' | 'noResolveAliases' | 'treatPackageAsDirectory' | 'dontAddToRecent'>,
-    message?: string,
-    securityScopedBookmarks?: boolean
-  }): (string[]) | (undefined);
+    title?: string;
+    defaultPath?: string;
+    buttonLabel?: string;
+    filters?: { name: string; extensions: string[] }[];
+    properties?: Array<
+      | 'openFile'
+      | 'openDirectory'
+      | 'multiSelections'
+      | 'showHiddenFiles'
+      | 'createDirectory'
+      | 'promptToCreate'
+      | 'noResolveAliases'
+      | 'treatPackageAsDirectory'
+      | 'dontAddToRecent'
+    >;
+    message?: string;
+    securityScopedBookmarks?: boolean;
+  }): string[] | undefined;
   /**
    * 弹出文件保存框
    */
   showSaveDialog(options: {
-    title?: string,
-    defaultPath?: string,
-    buttonLabel?: string,
-    filters?: { name: string, extensions: string[] }[],
-    message?: string,
-    nameFieldLabel?: string,
-    showsTagField?: string,
-    properties?: Array<'showHiddenFiles' | 'createDirectory' | 'treatPackageAsDirectory' | 'showOverwriteConfirmation' | 'dontAddToRecent'>,
-    securityScopedBookmarks?: boolean
-  }): (string) | (undefined);
+    title?: string;
+    defaultPath?: string;
+    buttonLabel?: string;
+    filters?: { name: string; extensions: string[] }[];
+    message?: string;
+    nameFieldLabel?: string;
+    showsTagField?: string;
+    properties?: Array<
+      | 'showHiddenFiles'
+      | 'createDirectory'
+      | 'treatPackageAsDirectory'
+      | 'showOverwriteConfirmation'
+      | 'dontAddToRecent'
+    >;
+    securityScopedBookmarks?: boolean;
+  }): string | undefined;
   /**
    * 插件应用页面中查找
    */
-  findInPage(text: string, options?: {
-    forward?: boolean,
-    findNext?: boolean,
-    matchCase?: boolean,
-    wordStart?: boolean,
-    medialCapitalAsWordStart?: boolean
-  }): void;
+  findInPage(
+    text: string,
+    options?: {
+      forward?: boolean;
+      findNext?: boolean;
+      matchCase?: boolean;
+      wordStart?: boolean;
+      medialCapitalAsWordStart?: boolean;
+    },
+  ): void;
   /**
    * 停止插件应用页面中查找
    */
-  stopFindInPage (action: 'clearSelection' | 'keepSelection' | 'activateSelection'): void;
+  stopFindInPage(
+    action: 'clearSelection' | 'keepSelection' | 'activateSelection',
+  ): void;
   /**
    * 拖拽文件
    */
@@ -422,7 +534,9 @@ interface UToolsApi {
   /**
    * 屏幕取色
    */
-  screenColorPick(callback: (color: { hex: string, rgb: string }) => void): void;
+  screenColorPick(
+    callback: (color: { hex: string; rgb: string }) => void,
+  ): void;
   /**
    * 屏幕截图
    */
@@ -438,7 +552,24 @@ interface UToolsApi {
   /**
    * 获取路径
    */
-  getPath(name: 'home' | 'appData' | 'userData' | 'cache' | 'temp' | 'exe' | 'module' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'logs' | 'pepperFlashSystemPlugin'): string;
+  getPath(
+    name:
+      | 'home'
+      | 'appData'
+      | 'userData'
+      | 'cache'
+      | 'temp'
+      | 'exe'
+      | 'module'
+      | 'desktop'
+      | 'documents'
+      | 'downloads'
+      | 'music'
+      | 'pictures'
+      | 'videos'
+      | 'logs'
+      | 'pepperFlashSystemPlugin',
+  ): string;
   /**
    * 获取文件图标
    */
@@ -459,10 +590,15 @@ interface UToolsApi {
   /**
    * 获取复制的文件或文件夹
    */
-  getCopyedFiles(): { isFile: boolean, isDirectory: boolean, name: string, path: string }[];
+  getCopyedFiles(): {
+    isFile: boolean;
+    isDirectory: boolean;
+    name: string;
+    path: string;
+  }[];
   /**
    * 读取当前文件管理器路径(linux 不支持)
-  */
+   */
   readCurrentFolderPath(): Promise<string>;
   /**
    * 读取当前浏览器窗口的URL(linux 不支持)
@@ -488,13 +624,24 @@ interface UToolsApi {
    */
   shellBeep(): void;
   /*
-  * 隐藏主窗口并键入字符串
-  */
+   * 隐藏主窗口并键入字符串
+   */
   hideMainWindowTypeString(str: string): void;
   /**
    * 模拟键盘按键
    */
-  simulateKeyboardTap(key: string, ...modifier: ('control' | 'ctrl' | 'shift' | 'option' | 'alt' | 'command' | 'super')[]): void;
+  simulateKeyboardTap(
+    key: string,
+    ...modifier: (
+      | 'control'
+      | 'ctrl'
+      | 'shift'
+      | 'option'
+      | 'alt'
+      | 'command'
+      | 'super'
+    )[]
+  ): void;
   /**
    * 模拟鼠标单击
    */
@@ -514,7 +661,7 @@ interface UToolsApi {
   /**
    * 获取鼠标绝对位置
    */
-  getCursorScreenPoint(): { x: number, y: number };
+  getCursorScreenPoint(): { x: number; y: number };
   /**
    * 获取主显示器
    */
@@ -526,15 +673,30 @@ interface UToolsApi {
   /**
    * 获取位置所在的显示器
    */
-  getDisplayNearestPoint(point: { x: number, y: number }): Display;
+  getDisplayNearestPoint(point: { x: number; y: number }): Display;
   /**
    * 获取矩形所在的显示器
    */
-  getDisplayMatching(rect: { x: number, y: number, width: number, height: number }): Display;
+  getDisplayMatching(rect: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }): Display;
   /**
    * 录屏源
    */
-  desktopCaptureSources(options: { types: string[], thumbnailSize?: { width: number, height: number }, fetchWindowIcons?: boolean }):Promise<{appIcon: {}, display_id: string, id: string, name: string, thumbnail: {} }>;
+  desktopCaptureSources(options: {
+    types: string[];
+    thumbnailSize?: { width: number; height: number };
+    fetchWindowIcons?: boolean;
+  }): Promise<{
+    appIcon: {};
+    display_id: string;
+    id: string;
+    name: string;
+    thumbnail: {};
+  }>;
   /**
    * 是否开发中
    */
@@ -579,7 +741,11 @@ interface UToolsApi {
      * @param attachment 附件 buffer
      * @param type 附件类型，示例：image/png, text/plain
      */
-    postAttachment(docId: string, attachment: Uint8Array, type: string): DbReturn;
+    postAttachment(
+      docId: string,
+      attachment: Uint8Array,
+      type: string,
+    ): DbReturn;
     /**
      * 获取附件
      * @param docId 文档ID
@@ -603,43 +769,47 @@ interface UToolsApi {
        */
       put(doc: DbDoc): Promise<DbReturn>;
       /**
-        * 获取文档
-        */
+       * 获取文档
+       */
       get(id: string): Promise<DbDoc | null>;
       /**
-        * 删除文档
-        */
+       * 删除文档
+       */
       remove(doc: string | DbDoc): Promise<DbReturn>;
       /**
-        * 批量操作文档(新增、修改、删除)
-        */
+       * 批量操作文档(新增、修改、删除)
+       */
       bulkDocs(docs: DbDoc[]): Promise<DbReturn[]>;
       /**
-        * 获取所有文档 可根据文档id前缀查找
-        */
+       * 获取所有文档 可根据文档id前缀查找
+       */
       allDocs(key?: string): Promise<DbDoc[]>;
       /**
-        * 存储附件到新文档
-        * @param docId 文档ID
-        * @param attachment 附件 buffer
-        * @param type 附件类型，示例：image/png, text/plain
-        */
-      postAttachment(docId: string, attachment: Uint8Array, type: string): Promise<DbReturn>;
+       * 存储附件到新文档
+       * @param docId 文档ID
+       * @param attachment 附件 buffer
+       * @param type 附件类型，示例：image/png, text/plain
+       */
+      postAttachment(
+        docId: string,
+        attachment: Uint8Array,
+        type: string,
+      ): Promise<DbReturn>;
       /**
-        * 获取附件
-        * @param docId 文档ID
-        */
+       * 获取附件
+       * @param docId 文档ID
+       */
       getAttachment(docId: string): Promise<Uint8Array | null>;
       /**
-        * 获取附件类型
-        * @param docId 文档ID
-        */
+       * 获取附件类型
+       * @param docId 文档ID
+       */
       getAttachmentType(docId: string): Promise<string | null>;
       /**
        * 云端复制数据状态 (null: 未开启数据同步、0: 已完成复制、1：复制中)
        */
       replicateStateFromCloud(): Promise<null | 0 | 1>;
-    }
+    };
   };
 
   dbStorage: {
@@ -648,15 +818,15 @@ interface UToolsApi {
      * @param key 键名(同时为文档ID)
      * @param value 键值
      */
-    setItem (key: string, value: any): void;
+    setItem(key: string, value: any): void;
     /**
      * 获取键名对应的值
      */
-    getItem (key: string): any;
+    getItem(key: string): any;
     /**
      * 删除键值对(删除文档)
      */
-    removeItem (key: string): void;
+    removeItem(key: string): void;
   };
 
   ubrowser: UBrowser;

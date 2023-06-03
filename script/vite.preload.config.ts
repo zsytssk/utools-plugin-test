@@ -3,7 +3,7 @@ import commonjsExternals from 'vite-plugin-commonjs-externals';
 
 import { PathConfig, resolve } from './common.config';
 
-const externals = ['child_process', 'path', /^electron(\/.+)?$/];
+const externals = ['child_process', 'fs', 'path', /^electron(\/.+)?$/];
 
 export default defineConfig({
     optimizeDeps: {
