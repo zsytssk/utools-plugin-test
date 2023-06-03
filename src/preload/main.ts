@@ -6,7 +6,7 @@ import { readFile, write } from './utils/ls';
 
 (window as any).findDirectory = async () => {
   const config = storage.get();
-  if (!config) {
+  if (!config?.folder?.length) {
     throw new Error('请先设置配置！');
   }
   const { folder, ignore = '', otherFile = '' } = config;

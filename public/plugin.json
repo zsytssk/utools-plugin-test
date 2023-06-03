@@ -1,12 +1,13 @@
 {
-    "main": "index.html",
-    "preload": "preload.js",
-    "logo": "logo.png",
-    "features": [
-        {
-            "code": "fzRun",
-            "explain": "用fzf寻找文件夹，然后选中应用打开",
-            "cmds": ["fzRun"]
-        }
-    ]
+  "main": "index.html",
+  "preload": "preload.js",
+  "logo": "logo.png",
+  "features": [
+    {
+      "code": "fzRun",
+      "explain": "用fzf寻找文件夹，然后选中应用打开",
+      "cmds": ["fzRun"]
+    }
+  ],
+  "platform": ["darwin", "linux"]
 }

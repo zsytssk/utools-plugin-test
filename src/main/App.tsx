@@ -1,5 +1,13 @@
 import { SettingOutlined } from '@ant-design/icons';
-import { Button, Card, ConfigProvider, Space, Switch, theme } from 'antd';
+import {
+  Button,
+  Card,
+  ConfigProvider,
+  Space,
+  Switch,
+  Tooltip,
+  theme,
+} from 'antd';
 import classNames from 'classnames';
 import { useRef, useState } from 'react';
 
@@ -29,23 +37,26 @@ export default function App() {
       >
         <Space className="config-box">
           {isSetting ? <BtnList settingRef={settingRef} /> : null}
+          <Tooltip title="修改主题">
+            <Space>
+              <Switch
+                onChange={(e) => {
+                  setDarkMode(!e);
+                }}
+              />
+              主题
+            </Space>
+          </Tooltip>
 
-          <Space>
-            <Switch
-              onChange={(e) => {
-                setDarkMode(!e);
-              }}
-            />
-            主题
-          </Space>
-
-          <Button
-            className="btn-config"
-            type={isSetting ? 'primary' : 'default'}
-            onClick={() => setIsSetting(!isSetting)}
-          >
-            <SettingOutlined />
-          </Button>
+          <Tooltip title="修改配置">
+            <Button
+              className="btn-config"
+              type={isSetting ? 'primary' : 'default'}
+              onClick={() => setIsSetting(!isSetting)}
+            >
+              <SettingOutlined />
+            </Button>
+          </Tooltip>
         </Space>
 
         {isSetting ? <Setting settingRef={settingRef} /> : <Search />}
