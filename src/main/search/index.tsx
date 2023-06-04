@@ -27,6 +27,7 @@ export function Search() {
         loading={loading}
         autoFocus
         allowClear
+        open
         popupClassName={styles.selectPopUp}
         placeholder={'请输入文件夹名称搜索'}
         showSearch

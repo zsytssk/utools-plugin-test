@@ -102,3 +102,17 @@ const utils = {
     throw new Error('读取配置文件出错，可能是配置文件格式有问题');
   }
 };
+
+(window as any).getType = (item: string) => {
+  if (item.startsWith('http:') || item.startsWith('https:')) {
+    return 'url';
+  }
+  item = resolveHome(item);
+  if (utils.isFile(item)) {
+    return 'file';
+  }
+  if (utils.isFolder(item)) {
+    return 'folder';
+  }
+  return '';
+};
