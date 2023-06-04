@@ -33,15 +33,6 @@ export function BtnList({ settingRef }: Props) {
           <ExportOutlined />
         </Button>
       </Tooltip>
-      <Tooltip title="保存">
-        <Button
-          title="保存"
-          className="btn-config"
-          onClick={() => settingRef.current?.save()}
-        >
-          <SaveOutlined />
-        </Button>
-      </Tooltip>
     </>
   );
 }

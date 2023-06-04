@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 
 export function readdir(dir: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -21,9 +23,9 @@ export async function readFile(file_path: string): Promise<string> {
   });
 }
 
-export function exists(path: string) {
+export function exists(file_path: string) {
   return new Promise((resolve, reject) => {
-    fs.exists(path, (exist) => {
+    fs.exists(file_path, (exist) => {
       resolve(exist);
     });
   });
@@ -119,4 +121,20 @@ export async function write(file_path: string, file_content: string) {
       resolve(undefined);
     });
   });
+}
+
+export function lstatSync(file_path: string) {
+  return fs.lstatSync(file_path);
+}
+
+export function resolveHome(file_path: string) {
+  const homedir = os.homedir();
+  if (!homedir) {
+    return file_path;
+  }
+
+  if (file_path[0] === '~') {
+    return path.join(homedir, file_path.slice(1));
+  }
+  return file_path;
 }

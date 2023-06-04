@@ -1,7 +1,9 @@
 export const APP_NAME = 'fzRun';
 
 type Data = {
-  runScript: string;
+  runScript?: string;
+  customRunFnEnabled: boolean;
+  customRunFn?: string;
   folder: Array<{
     folder: string;
     depth: number;

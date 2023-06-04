@@ -18,6 +18,7 @@
     "antd": "^5.5.1",
     "classnames": "^2.3.1",
     "fzf": "^0.5.2",
+    "git": "^0.1.5",
     "less": "^4.1.2",
     "lodash": "^4.17.21",
     "node-pty": "^0.10.1",
@@ -27,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-transition-group": "^4.4.2",
     "rollup-plugin-copy": "^3.4.0",
+    "sf": "^0.2.0",
     "vite-plugin-clean": "^1.0.0",
     "vite-plugin-commonjs-externals": "^0.1.1"
   },

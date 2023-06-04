@@ -2,7 +2,7 @@ import { storage } from '@common/storage';
 import * as path from 'path';
 
 import { excuse } from './utils/excuse';
-import { readFile, write } from './utils/ls';
+import { lstatSync, readFile, resolveHome, write } from './utils/ls';
 
 (window as any).findDirectory = async () => {
   const config = storage.get();
@@ -10,7 +10,12 @@ import { readFile, write } from './utils/ls';
     throw new Error('请先设置配置！');
   }
   const { folder, ignore = '', otherFile = '' } = config;
-  const otherFiles = otherFile.split(',');
+  const otherFiles = otherFile
+    .split('\n')
+    .map((item) => {
+      return item.split(',');
+    })
+    .flat();
   const ignoreArr = ignore.split(',');
   let ignoreStr = '';
   for (const item of ignoreArr) {
@@ -36,14 +41,29 @@ import { readFile, write } from './utils/ls';
   });
 };
 
+const utils = {
+  isFile: (item: string) => lstatSync(item).isFile(),
+  isFolder: (item: string) => lstatSync(item).isDirectory(),
+};
+
 (window as any).runSelected = async (dir: string) => {
   const config = storage.get();
-  if (!config) {
+  if (!config || (!config.customRunFn && !config.runScript)) {
     throw new Error('请先配置！');
   }
-  let { runScript } = config;
-  runScript = runScript.replace('${dir}', dir);
-  await excuse(runScript, {});
+  dir = resolveHome(dir);
+  const { runScript = '', customRunFnEnabled, customRunFn = '' } = config;
+  if (!customRunFnEnabled && runScript) {
+    const newRunScript = runScript.replace('${dir}', dir);
+    await excuse(newRunScript, {});
+  }
+  try {
+    const fn = eval(customRunFn);
+    const str = fn(dir, utils);
+    await excuse(str, {});
+  } catch (err) {
+    throw new Error('可能是自定义函数配置有问题！');
+  }
 };
 
 (window as any).exportConfig = async () => {
@@ -53,8 +73,11 @@ import { readFile, write } from './utils/ls';
     buttonLabel: '保存',
     filters: [{ name: 'fzRunConfig', extensions: ['json'] }],
   });
+  if (!file_path) {
+    return;
+  }
   const config = storage.get();
-  if (!config || !file_path) {
+  if (!config) {
     throw new Error('请先设置配置！');
   }
   await write(file_path, JSON.stringify(config));
@@ -67,9 +90,8 @@ import { readFile, write } from './utils/ls';
     buttonLabel: '导入',
     filters: [{ name: '', extensions: ['json'] }],
   });
-  const config = storage.get();
-  if (!config || !file_paths?.length) {
-    throw new Error('请先设置配置！');
+  if (!file_paths?.length) {
+    return;
   }
   const file_path = file_paths[0];
 

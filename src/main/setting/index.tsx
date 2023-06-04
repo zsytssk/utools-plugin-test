@@ -1,7 +1,7 @@
 import { DeleteOutlined } from '@ant-design/icons';
 import { storage } from '@common/storage';
 import { useDebounceEffect } from 'ahooks';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Space, Switch } from 'antd';
 import { useCallback, useEffect, useImperativeHandle } from 'react';
 
 import { useStateId } from '../hooks/useStateId';
@@ -33,8 +33,18 @@ export function Setting({ settingRef }: Props) {
 
   useDebounceEffect(
     () => {
-      const values = form.getFieldsValue();
-      storage.save(values);
+      let abort = false;
+      const fn = async () => {
+        const values = await form.validateFields();
+        if (abort) {
+          return;
+        }
+        storage.save(values);
+      };
+      fn();
+      return () => {
+        abort = true;
+      };
     },
     [values],
     { wait: 300 },
@@ -53,14 +63,50 @@ export function Setting({ settingRef }: Props) {
   return (
     <div className={styles.setting}>
       <Form form={form} onFinish={onFinish}>
-        <div className="sub-title">默认运行脚本</div>
+        <div className="sub-title">
+          运行脚本
+          <div className="in-right">
+            <Form.Item noStyle>
+              <Space>
+                自定义函数
+                <Form.Item
+                  noStyle
+                  name="customRunFnEnabled"
+                  valuePropName="checked"
+                  rules={[{ required: true, message: '请设置运行脚本' }]}
+                >
+                  <Switch />
+                </Form.Item>
+              </Space>
+            </Form.Item>
+          </div>
+        </div>
         <div className="sub-con">
-          <Form.Item
-            name="runScript"
-            rules={[{ required: true, message: '请设置默认运行脚本' }]}
-          >
-            <Input placeholder="默认运行脚本, ${dir} 是指选中的选项" />
-          </Form.Item>
+          {values?.customRunFnEnabled ? (
+            <Form.Item
+              name="customRunFn"
+              rules={[{ required: true, message: '请设置默认运行脚本' }]}
+            >
+              <Input.TextArea
+                defaultValue="function genRunStr(item, utils) {
+                  if (item.startsWith('http:') || item.startsWith('https:')) {
+                    return `open ${item}`;
+                  }
+                  if (utils.isFile(item)) {
+                    return `/usr/local/bin/code ${item}`;
+                  }
+                  return `open -a terminal ${item}`;
+                };genRunStr"
+              />
+            </Form.Item>
+          ) : (
+            <Form.Item
+              name="runScript"
+              rules={[{ required: true, message: '请设置默认运行脚本' }]}
+            >
+              <Input placeholder="默认运行脚本, ${dir} 是指选中的选项" />
+            </Form.Item>
+          )}
         </div>
         <Form.List
           name="folder"
@@ -132,7 +178,10 @@ export function Setting({ settingRef }: Props) {
         <div className="sub-title">ignore文件</div>
         <div className="sub-con">
           <Form.Item name="ignore">
-            <Input.TextArea placeholder="用逗号分隔" className="ignore-input" />
+            <Input.TextArea
+              placeholder="用逗号或者换行符分·隔"
+              className="ignore-input"
+            />
           </Form.Item>
         </div>
         <div className="sub-title">其他文件</div>
