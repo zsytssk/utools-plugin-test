@@ -6,16 +6,17 @@ import { lstatSync, readFile, resolveHome, write } from './utils/ls';
 
 (window as any).findDirectory = async () => {
   const config = storage.get();
-  if (!config?.folder?.length) {
+  if (!config) {
     throw new Error('请先设置配置！');
   }
-  const { folder, ignore = '', otherFile = '' } = config;
+  const { folder = [], ignore = '', otherFile = '' } = config;
   const otherFiles = otherFile
     .split('\n')
     .map((item) => {
       return item.split(',');
     })
     .flat();
+
   const ignoreArr = ignore.split(',');
   let ignoreStr = '';
   for (const item of ignoreArr) {

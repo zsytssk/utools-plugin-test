@@ -108,18 +108,7 @@ export function Setting({ settingRef }: Props) {
             </Form.Item>
           )}
         </div>
-        <Form.List
-          name="folder"
-          rules={[
-            {
-              validator: async (_, values) => {
-                if (!values?.length) {
-                  return Promise.reject(new Error('请设置搜索文件夹'));
-                }
-              },
-            },
-          ]}
-        >
+        <Form.List name="folder">
           {(fields, { add, remove }) => {
             return (
               <>
