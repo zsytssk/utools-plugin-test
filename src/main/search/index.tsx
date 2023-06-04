@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import { useCallback, useMemo } from 'react';
 
-import { useGetList } from '../tools/useGetList';
+import { useGetList } from '../hooks/useGetList';
 import styles from './index.module.less';
 
 export function Search() {

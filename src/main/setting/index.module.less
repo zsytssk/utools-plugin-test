@@ -2,18 +2,18 @@
   :global {
     margin-top: 30px;
     .sub-title {
-      background-color: #fafafa;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 500;
-      height: 40px;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      padding: 0 16px;
-      z-index: 1;
-      align-items: center;
-      box-sizing: border-box;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1;
+      box-sizing: border-box;
+      margin-bottom: 18px;
+      border-radius: 4px;
+      background-color: #fafafa;
+      padding: 0 16px;
+      height: 40px;
+      font-weight: 500;
+      font-size: 14px;
     }
     .sub-con {
       padding-bottom: 10px;
@@ -29,8 +29,8 @@
         text-align: right;
       }
       .btn-remove {
-        margin-left: 30px;
         margin-bottom: 24px;
+        margin-left: 30px;
       }
     }
     .ignore-input {
@@ -48,10 +48,10 @@
   .theme-dark {
     :local(.setting) {
       .sub-title {
-        background-color: #636363;
+        box-shadow: 0 2px 0 rgba(255, 255, 255, 0.04);
         border-color: #424242;
         border: 1px solid #424242;
-        box-shadow: 0 2px 0 rgba(255, 255, 255, 0.04);
+        background-color: #636363;
       }
     }
   }

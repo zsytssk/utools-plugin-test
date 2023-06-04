@@ -10,19 +10,19 @@
   :local(.app) {
     // background-color: transparent;
     display: flex;
-    border-radius: 0;
     border: none;
+    border-radius: 0;
     .config-box {
       display: flex;
+      position: sticky;
+      top: 0;
       justify-content: flex-end;
+      z-index: 1;
+      background-color: #fff;
+      padding: 10px 5px;
       .btn-config {
         margin-left: 10px;
       }
-      position: sticky;
-      top: 0;
-      padding: 10px 5px;
-      z-index: 1;
-      background-color: #fff;
     }
     & > .ant-card-body {
       padding: 50px;
