@@ -1,11 +1,11 @@
-import { storage } from '@common/storage';
+import { ConfigData, storage } from '@common/storage';
 import * as path from 'path';
 
 import { excuse } from './utils/excuse';
 import { lstatSync, readFile, resolveHome, write } from './utils/ls';
 
 (window as any).findDirectory = async () => {
-  const config = storage.get();
+  const config = storage.get('config') as ConfigData;
   if (!config) {
     throw new Error('请先设置配置！');
   }
@@ -48,7 +48,7 @@ const utils = {
 };
 
 (window as any).runSelected = async (dir: string) => {
-  const config = storage.get();
+  const config = storage.get('config') as ConfigData;
   if (!config || (!config.customRunFn && !config.runScript)) {
     throw new Error('请先配置！');
   }
@@ -77,7 +77,7 @@ const utils = {
   if (!file_path) {
     return;
   }
-  const config = storage.get();
+  const config = storage.get('config') as ConfigData;
   if (!config) {
     throw new Error('请先设置配置！');
   }
@@ -98,7 +98,7 @@ const utils = {
 
   try {
     const content = await readFile(file_path);
-    await storage.save(JSON.parse(content));
+    await storage.save('config', JSON.parse(content) as ConfigData);
   } catch {
     throw new Error('读取配置文件出错，可能是配置文件格式有问题');
   }

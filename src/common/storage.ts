@@ -1,6 +1,7 @@
 export const APP_NAME = 'fzRun';
 
-type Data = {
+export type Theme = 'dark' | 'light';
+export type ConfigData = {
   runScript?: string;
   customRunFnEnabled: boolean;
   customRunFn?: string;
@@ -11,21 +12,21 @@ type Data = {
   ignore: string;
   otherFile?: string;
 };
-function save(data: Data) {
-  return utools.dbStorage.setItem(APP_NAME, JSON.stringify(data));
+function save(name: string, data: any) {
+  return utools.dbStorage.setItem(APP_NAME + ':' + name, JSON.stringify(data));
 }
 
-function get(): Data | undefined {
+function get(name: string): any | undefined {
   try {
-    const content = utools.dbStorage.getItem(APP_NAME);
+    const content = utools.dbStorage.getItem(APP_NAME + ':' + name);
     return JSON.parse(content);
   } catch {
     return undefined;
   }
 }
 
-function remove() {
-  return utools.dbStorage.removeItem(APP_NAME);
+function remove(name: string) {
+  return utools.dbStorage.removeItem(APP_NAME + ':' + name);
 }
 
 export const storage = {

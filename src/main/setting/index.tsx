@@ -1,5 +1,5 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { storage } from '@common/storage';
+import { ConfigData, storage } from '@common/storage';
 import { useDebounceEffect } from 'ahooks';
 import { Button, Form, Input, Space, Switch } from 'antd';
 import { useCallback, useEffect, useImperativeHandle } from 'react';
@@ -35,11 +35,11 @@ export function Setting({ settingRef }: Props) {
     () => {
       let abort = false;
       const fn = async () => {
-        const values = await form.validateFields();
+        const values = (await form.validateFields()) as ConfigData;
         if (abort) {
           return;
         }
-        storage.save(values);
+        storage.save('config', values);
       };
       fn();
       return () => {
@@ -51,13 +51,13 @@ export function Setting({ settingRef }: Props) {
   );
 
   useEffect(() => {
-    const values = storage.get();
+    const values = storage.get('config') as ConfigData;
     form.setFieldsValue(values);
   }, [form, id]);
 
   const onFinish = useCallback(() => {
-    const values = form.getFieldsValue();
-    storage.save(values);
+    const values = form.getFieldsValue() as ConfigData;
+    storage.save('config', values);
   }, [form]);
 
   return (

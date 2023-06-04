@@ -9,39 +9,43 @@ import {
   theme,
 } from 'antd';
 import classNames from 'classnames';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { BtnList } from './components/btnList';
+import { useTheme } from './hooks/useTheme';
 import styles from './index.module.less';
 import { Search } from './search';
 import { Setting, SettingOpt } from './setting';
 
 const { darkAlgorithm, defaultAlgorithm } = theme;
 export default function App() {
-  const [darkMode, setDarkMode] = useState(true);
   const [isSetting, setIsSetting] = useState(false);
+  const [theme, setTheme] = useTheme();
   const settingRef = useRef<SettingOpt>();
+
+  useEffect(() => {
+    const classList = document.documentElement.classList;
+    classList.remove('theme-dark', 'theme-light');
+    if (theme) {
+      classList.add(theme === 'dark' ? 'theme-dark' : 'theme-light');
+    }
+  }, [theme]);
 
   return (
     <ConfigProvider
       theme={{
-        algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
+        algorithm: theme === 'dark' ? darkAlgorithm : defaultAlgorithm,
       }}
     >
-      <Card
-        className={classNames({
-          [styles.app]: true,
-          'theme-dark': darkMode,
-          'theme-light': !darkMode,
-        })}
-      >
+      <Card className={styles.app}>
         <Space className="config-box">
           {isSetting ? <BtnList settingRef={settingRef} /> : null}
           <Tooltip title="修改主题">
             <Space>
               <Switch
+                checked={theme === 'light'}
                 onChange={(e) => {
-                  setDarkMode(!e);
+                  setTheme(!e ? 'dark' : 'light');
                 }}
               />
               主题
