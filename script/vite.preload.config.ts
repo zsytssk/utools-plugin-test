@@ -16,6 +16,7 @@ export default defineConfig({
   ],
   resolve: resolve,
   build: {
+    minify: false,
     emptyOutDir: false,
     outDir: PathConfig.Dist,
     rollupOptions: {
